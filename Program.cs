@@ -1,3 +1,5 @@
+using sales_app_desktop.UI;
+
 namespace sales_app_desktop;
 
 static class Program
@@ -8,9 +10,14 @@ static class Program
     [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
-    }    
+
+        // ساخت دیتابیس و داده اولیه در اولین اجرا
+        using (var db = new Data.AppDbContext())
+        {
+            db.Database.EnsureCreated();
+        }
+
+        Application.Run(new ShellWindow());
+    }
 }
