@@ -1,4 +1,4 @@
-﻿namespace sales_desktop;
+﻿namespace sales_app_desktop;
 
 partial class Form1
 {

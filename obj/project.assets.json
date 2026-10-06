@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ali\\Documents\\sales-desktop\\sales-desktop.csproj",
-      "projectName": "sales-desktop",
-      "projectPath": "C:\\Users\\Ali\\Documents\\sales-desktop\\sales-desktop.csproj",
+      "projectUniqueName": "C:\\Users\\Ali\\Documents\\sales-app-desktop\\sales-app-desktop.csproj",
+      "projectName": "sales-app-desktop",
+      "projectPath": "C:\\Users\\Ali\\Documents\\sales-app-desktop\\sales-app-desktop.csproj",
       "packagesPath": "C:\\Users\\Ali\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ali\\Documents\\sales-desktop\\obj\\",
+      "outputPath": "C:\\Users\\Ali\\Documents\\sales-app-desktop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ali\\AppData\\Roaming\\NuGet\\NuGet.Config"
