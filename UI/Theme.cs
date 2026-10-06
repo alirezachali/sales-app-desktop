@@ -1,34 +1,37 @@
 using System.Drawing.Drawing2D;
+using sales_app_desktop.Data;
 
 namespace sales_app_desktop.UI;
 
 /// <summary>
-/// پالت رنگ و فونت مشترک — تم روشن و استاندارد ویندوز، بدون تزئینات.
+/// پالت رنگ و فونت مشترک؛ روشن/تیره از تنظیمات خوانده می‌شود.
 /// </summary>
 internal static class Theme
 {
-    // ── پالت روشن ──────────────────────────────────────────
-    public static readonly Color Base        = SystemColors.Control;
-    public static readonly Color Surface     = SystemColors.ControlLightLight; // سفید
-    public static readonly Color SurfaceAlt  = SystemColors.ControlLight;
-    public static readonly Color Border      = SystemColors.ControlDark;
-    public static readonly Color Accent      = Color.FromArgb(0, 120, 212);    // آبی ویندوز
-    public static readonly Color AccentOn    = Color.White;
-    public static readonly Color Text        = SystemColors.ControlText;
-    public static readonly Color TextDim     = SystemColors.GrayText;
-    public static readonly Color Success     = Color.FromArgb(16, 124, 16);
-    public static readonly Color Danger      = Color.FromArgb(196, 43, 28);
+    public static bool IsDark => AppSettings.Current.IsDark;
 
-    // سازگاری با کدهای قبلی
-    public static readonly Color BorderHi = Border;
-    public static readonly Color Warn = Color.FromArgb(157, 93, 0);
-    public static readonly Color AccentViolet = Accent;
+    // ── پالت (بر اساس تم انتخابی) ─────────────────────────
+    public static Color Base => IsDark ? Color.FromArgb(12, 14, 19) : SystemColors.Control;
+    public static Color Surface => IsDark ? Color.FromArgb(21, 25, 33) : SystemColors.ControlLightLight;
+    public static Color SurfaceAlt => IsDark ? Color.FromArgb(30, 36, 48) : SystemColors.ControlLight;
+    public static Color Border => IsDark ? Color.FromArgb(48, 56, 72) : SystemColors.ControlDark;
+    public static Color BorderHi => Border;
+
+    public static Color Accent => Color.FromArgb(0, 120, 212);       // آبی ویندوز
+    public static Color AccentViolet => Accent;
+    public static Color AccentOn => Color.White;
+
+    public static Color Text => IsDark ? Color.FromArgb(234, 239, 247) : SystemColors.ControlText;
+    public static Color TextDim => IsDark ? Color.FromArgb(147, 160, 180) : SystemColors.GrayText;
+    public static Color Success => IsDark ? Color.FromArgb(53, 208, 160) : Color.FromArgb(16, 124, 16);
+    public static Color Warn => IsDark ? Color.FromArgb(245, 165, 36) : Color.FromArgb(157, 93, 0);
+    public static Color Danger => IsDark ? Color.FromArgb(255, 92, 122) : Color.FromArgb(196, 43, 28);
 
     // ── فونت سیستم ─────────────────────────────────────────
-    public static readonly Font F   = new("Segoe UI", 9.5f);
-    public static readonly Font FS  = new("Segoe UI", 9f);
-    public static readonly Font FB  = new("Segoe UI", 9.5f, FontStyle.Bold);
-    public static readonly Font FL  = new("Segoe UI", 14f, FontStyle.Bold);
+    public static readonly Font F = new("Segoe UI", 9.5f);
+    public static readonly Font FS = new("Segoe UI", 9f);
+    public static readonly Font FB = new("Segoe UI", 9.5f, FontStyle.Bold);
+    public static readonly Font FL = new("Segoe UI", 14f, FontStyle.Bold);
     public static readonly Font FXL = new("Segoe UI", 20f, FontStyle.Bold);
 
     // ── ابزار ──────────────────────────────────────────────
@@ -44,23 +47,24 @@ internal static class Theme
         return sb.ToString();
     }
 
-    /// <summary>فرمت تومان با جداکننده هزارگان + اعداد فارسی.</summary>
+    /// <summary>فرمت مبلغ با جداکننده هزارگان + اعداد فارسی + واحد پولی تنظیمات.</summary>
     public static string Toman(decimal v)
     {
         string raw = v.ToString("#,0", System.Globalization.CultureInfo.InvariantCulture);
-        return FaDigits(raw) + " تومان";
+        return FaDigits(raw) + " " + AppSettings.Current.Currency;
     }
 
-    /// <summary>تاریخ/ساعت شمسی برای سربرگ.</summary>
+    /// <summary>تاریخ/ساعت شمسی بر اساس منطقه زمانی انتخابی.</summary>
     public static string NowFa()
     {
+        var now = DateTime.UtcNow.AddHours(AppSettings.Current.TimeZoneOffsetHours);
         var cal = new System.Globalization.PersianCalendar();
-        string date = $"{cal.GetYear(DateTime.Now)}/{cal.GetMonth(DateTime.Now):00}/{cal.GetDayOfMonth(DateTime.Now):00}";
-        string time = DateTime.Now.ToString("HH:mm:ss");
+        string date = $"{cal.GetYear(now)}/{cal.GetMonth(now):00}/{cal.GetDayOfMonth(now):00}";
+        string time = now.ToString("HH:mm:ss");
         return FaDigits(date + "  " + time);
     }
 
-    /// <summary>مسیر گوشه‌دار (فقط برای کارت‌های ساده که هنوز استفاده می‌شود).</summary>
+    /// <summary>مسیر گوشه‌دار (برای کارت‌های ساده).</summary>
     internal static GraphicsPath MakeRound(int w, int h, int r) =>
         GraphicsPathFactory.Round(w, h, r);
 

@@ -17,7 +17,7 @@ internal class ShellWindow : Form
 
     public ShellWindow()
     {
-        Text = "سیستم فروش و انبار — فروشگاه من";
+        Text = $"سیستم فروش و انبار — {sales_app_desktop.Data.AppSettings.Current.StoreName}";
         StartPosition = FormStartPosition.CenterScreen;
         ClientSize = new(1100, 700);
         MinimumSize = new(920, 600);
@@ -36,11 +36,13 @@ internal class ShellWindow : Form
             new ProductsPage(),
             new CustomersPage(),
             new ReportsPage(),
+            new SettingsPage(),
         };
         _pages["sales"] = pages[0];
         _pages["products"] = pages[1];
         _pages["customers"] = pages[2];
         _pages["reports"] = pages[3];
+        _pages["settings"] = pages[4];
         _content.Controls.AddRange(pages);
 
         Controls.Add(_content);
@@ -74,7 +76,7 @@ internal class ShellWindow : Form
 
         var brand = new Label
         {
-            Text = "فروشگاه من",
+            Text = sales_app_desktop.Data.AppSettings.Current.StoreName,
             Font = Theme.FL,
             ForeColor = Theme.Text,
             AutoSize = true,
@@ -102,6 +104,7 @@ internal class ShellWindow : Form
             ("products", "products", "محصولات و انبار"),
             ("customers", "customers", "مشتریان"),
             ("reports", "products", "گزارش فروش و سود"),
+            ("settings", "products", "تنظیمات"),
         };
 
         int y = 70;
