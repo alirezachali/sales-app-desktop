@@ -31,7 +31,7 @@ public class CustomersPage : PageBase
     {
         SetHeader("مشتریان", "مدیریت پرونده مشتریان و اعتبار آن‌ها");
 
-        // â”€â”€ Ù†ÙˆØ§Ø± Ø§Ø¨Ø²Ø§Ø± â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // ── نوار ابزار ───────────────────────────────
         var toolbar = new Panel
         {
             BackColor = Theme.Surface,
@@ -68,6 +68,7 @@ public class CustomersPage : PageBase
         toolbar.Controls.Add(btnRow);
         _grid.ReadOnly = true;
         ModernGrid.Apply(_grid);
+        _grid.Dock = DockStyle.Fill;
         _grid.Columns.Add(ModernGrid.Col("نام", 200, DataGridViewContentAlignment.MiddleRight, nameof(CustomerRow.Name), 20));
         _grid.Columns.Add(ModernGrid.Col("شماره تماس", 150, DataGridViewContentAlignment.MiddleLeft, nameof(CustomerRow.Phone), 16));
         _grid.Columns.Add(ModernGrid.Col("آدرس", 200, DataGridViewContentAlignment.MiddleRight, nameof(CustomerRow.Address), 20));

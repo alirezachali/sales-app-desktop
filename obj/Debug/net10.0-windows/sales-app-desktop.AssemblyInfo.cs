@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sales-app-desktop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c8f423780077b47d7885528b6ecf3448a2c3509")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c65438154ad2fcc8734d6cc0aecb92c0506e23b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("sales-app-desktop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sales-app-desktop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

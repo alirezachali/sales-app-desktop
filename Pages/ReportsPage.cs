@@ -60,7 +60,6 @@ public class ReportsPage : PageBase
         _period.DropDownStyle = ComboBoxStyle.DropDownList;
         _period.Font = Theme.F;
         _period.Width = 160;
-        _period.DropDownStyleChanged is null; // placeholder (unused)
         _period.DataSource = new List<PeriodOption>
         {
             new("daily", "روزانه"),

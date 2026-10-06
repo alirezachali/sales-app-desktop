@@ -35,10 +35,12 @@ internal class ShellWindow : Form
             new SalesPage(),
             new ProductsPage(),
             new CustomersPage(),
+            new ReportsPage(),
         };
         _pages["sales"] = pages[0];
         _pages["products"] = pages[1];
         _pages["customers"] = pages[2];
+        _pages["reports"] = pages[3];
         _content.Controls.AddRange(pages);
 
         Controls.Add(_content);
@@ -99,6 +101,7 @@ internal class ShellWindow : Form
             ("sales", "sales", "ثبت فروش"),
             ("products", "products", "محصولات و انبار"),
             ("customers", "customers", "مشتریان"),
+            ("reports", "products", "گزارش فروش و سود"),
         };
 
         int y = 70;
