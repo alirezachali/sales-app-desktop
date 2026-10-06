@@ -72,31 +72,79 @@ internal class ShellWindow : Form
         _sidebar.Width = 210;
         _sidebar.Dock = DockStyle.Right;
         _sidebar.BackColor = Theme.Base;
-        _sidebar.Padding = new Padding(8, 12, 8, 8);
+        _sidebar.Padding = new Padding(8, 8, 8, 8);
+
+        var settings = sales_app_desktop.Data.AppSettings.Current;
+
+        // ── سربرگ سایدبار: لوگو + نام ──────────
+        var header = new Panel
+        {
+            Dock = DockStyle.Top,
+            Height = 170,
+            BackColor = Theme.Base,
+        };
 
         var brand = new Label
         {
-            Text = sales_app_desktop.Data.AppSettings.Current.StoreName,
+            Text = settings.StoreName,
             Font = Theme.FL,
             ForeColor = Theme.Text,
-            AutoSize = true,
             Dock = DockStyle.Top,
+            Height = 40,
             TextAlign = ContentAlignment.MiddleCenter,
-            Padding = new Padding(0, 8, 0, 2),
         };
         var sub = new Label
         {
             Text = "سیستم فروش و انبار",
             Font = Theme.FS,
             ForeColor = Theme.TextDim,
-            AutoSize = true,
             Dock = DockStyle.Top,
+            Height = 26,
             TextAlign = ContentAlignment.MiddleCenter,
-            Padding = new Padding(0, 0, 0, 10),
         };
-        _sidebar.Controls.Add(sub);
-        _sidebar.Controls.Add(brand);
-        brand.BringToFront();
+
+        // لوگو (تصویر انتخابی در تنظیمات؛ در نبود آن، حرف اول نام فروشگاه)
+        Image? logoImg = null;
+        try
+        {
+            if (!string.IsNullOrEmpty(settings.LogoPath) && File.Exists(settings.LogoPath))
+                logoImg = Image.FromFile(settings.LogoPath);
+        }
+        catch { logoImg = null; }
+
+        if (logoImg is not null)
+        {
+            header.Controls.Add(brand);
+            header.Controls.Add(sub);
+            var logoBox = new PictureBox
+            {
+                Image = logoImg,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill,
+                BackColor = Color.Transparent,
+                Padding = new Padding(4),
+            };
+            header.Controls.Add(logoBox);
+            logoBox.BringToFront();
+        }
+        else
+        {
+            var logoLetter = new Label
+            {
+                Text = string.IsNullOrEmpty(settings.StoreName) ? "؟" : settings.StoreName.Trim().FirstOrDefault().ToString(),
+                Font = new Font("Segoe UI", 26f, FontStyle.Bold),
+                ForeColor = Theme.Accent,
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent,
+            };
+            header.Controls.Add(brand);
+            header.Controls.Add(sub);
+            header.Controls.Add(logoLetter);
+            logoLetter.BringToFront();
+        }
+
+        _sidebar.Controls.Add(header);
 
         var defs = new (string Key, string Icon, string Title)[]
         {
@@ -107,7 +155,7 @@ internal class ShellWindow : Form
             ("settings", "products", "تنظیمات"),
         };
 
-        int y = 70;
+        int y = 180;
         foreach (var d in defs)
         {
             var item = new NavItem(d.Key, d.Icon, d.Title) { Height = 40 };
@@ -122,13 +170,11 @@ internal class ShellWindow : Form
         }
 
         // دکمه خروج در پایین
-        var exit = new Button
+        var exit = new RButton
         {
             Text = "خروج از سیستم",
             Height = 34,
             Dock = DockStyle.Bottom,
-            BackColor = Theme.Base,
-            UseVisualStyleBackColor = true,
         };
         exit.Click += (_, _) => Close();
         _sidebar.Controls.Add(exit);

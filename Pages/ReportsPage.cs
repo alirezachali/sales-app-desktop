@@ -36,12 +36,11 @@ public class ReportsPage : PageBase
         BackColor = Color.Transparent,
         Anchor = AnchorStyles.Top | AnchorStyles.Right,
     };
-    private readonly Button _btnRefresh = new()
+    private readonly RButton _btnRefresh = new()
     {
         Text = "به‌روزرسانی",
         Width = 110,
         Height = 32,
-        UseVisualStyleBackColor = true,
     };
 
     public ReportsPage()

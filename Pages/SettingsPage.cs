@@ -127,8 +127,8 @@ public class SettingsPage : PageBase
             AutoSize = true,
             BackColor = Color.Transparent,
         };
-        var btnPick = new Button { Text = "انتخاب لوگو…", Width = 130, Height = 32, UseVisualStyleBackColor = true };
-        var btnClear = new Button { Text = "حذف لوگو", Width = 110, Height = 32, UseVisualStyleBackColor = true };
+        var btnPick = new RButton { Text = "انتخاب لوگو…", Width = 130, Height = 32 };
+        var btnClear = new RButton { Text = "حذف لوگو", Width = 110, Height = 32 };
         btnPick.Click += (_, _) => PickLogo();
         btnClear.Click += (_, _) => { _pickedLogo = null; LoadLogoPreview(null); _dirty = true; };
         logoButtons.Controls.Add(btnPick);
@@ -191,25 +191,53 @@ public class SettingsPage : PageBase
 
     private void SaveAll()
     {
-        bool themeChanged = _s.IsDark != Equals(_theme.SelectedValue, "dark");
-        bool logoChanged = _s.LogoPath != _pickedLogo;
+        try
+        {
+            bool themeChanged = _s.IsDark != Equals(_theme.SelectedValue, "dark");
+            bool logoChanged = _s.LogoPath != _pickedLogo;
 
-        _s.IsDark = Equals(_theme.SelectedValue, "dark");
-        _s.StoreName = string.IsNullOrWhiteSpace(_storeName.Text) ? "فروشگاه من" : _storeName.Text.Trim();
-        _s.Currency = string.IsNullOrWhiteSpace(_currency.Text) ? "تومان" : _currency.Text.Trim();
-        if (_timezone.SelectedItem is NamedOption opt)
-            _s.TimeZoneOffsetHours = Zones.First(z => z.Name == opt.Display).Offset;
-        _s.TimeZoneName = _timezone.Text;
-        _s.LogoPath = _pickedLogo;
-        AppSettings.Save();
-        _dirty = false;
+            _s.IsDark = Equals(_theme.SelectedValue, "dark");
+            _s.StoreName = string.IsNullOrWhiteSpace(_storeName.Text) ? "فروشگاه من" : _storeName.Text.Trim();
+            _s.Currency = string.IsNullOrWhiteSpace(_currency.Text) ? "تومان" : _currency.Text.Trim();
+            if (_timezone.SelectedItem is NamedOption opt)
+                _s.TimeZoneOffsetHours = Zones.FirstOrDefault(z => z.Name == opt.Display).Offset;
+            _s.TimeZoneName = _timezone.Text;
+            _s.LogoPath = _pickedLogo;
+            AppSettings.Save();
+            _dirty = false;
 
-        string msg = "تنظیمات ذخیره شد.";
-        if (themeChanged || logoChanged)
-            msg += "\nبرای اعمال تم/لوگو، برنامه مجدداً راه‌اندازی می‌شود.";
-        MessageBox.Show(msg, "تنظیمات", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string msg = "تنظیمات ذخیره شد.";
+            if (themeChanged || logoChanged)
+                msg += "\nبرای اعمال تم/لوگو، برنامه مجدداً راه‌اندازی می‌شود.";
+            MessageBox.Show(msg, "تنظیمات", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        if (themeChanged || logoChanged)
-            Application.Restart();
+            if (themeChanged || logoChanged)
+                RestartApp();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("خطا در ذخیره تنظیمات:\n" + ex.Message, "تنظیمات",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    /// <summary>راه‌اندازی مجدد مطمئن برنامه (بدون وابستگی به Application.Restart).</summary>
+    private void RestartApp()
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = Application.ExecutablePath,
+                UseShellExecute = true,
+            });
+            Application.Exit();
+        }
+        catch
+        {
+            // اگر راه‌اندازی مجدد ممکن نبود، کاربر خودش برنامه را باز کند
+            MessageBox.Show("لطفاً برنامه را دستی بسته و دوباره باز کنید.", "تنظیمات",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
     }
 }

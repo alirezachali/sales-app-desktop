@@ -66,6 +66,9 @@ public class SalesPage : PageBase
         _customer.ValueMember = nameof(CustomerOption.Id);
         _customer.Font = Theme.F;
         _customer.Width = 280;
+        _customer.BackColor = Theme.Surface;
+        _customer.ForeColor = Theme.Text;
+        _customer.FlatStyle = FlatStyle.Flat;
 
         _discount.Placeholder = "تخفیف کل سبد (تومان)";
         _discount.Dock = DockStyle.Fill;

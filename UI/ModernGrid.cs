@@ -40,7 +40,7 @@ internal static class ModernGrid
         };
         g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         g.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-        g.EnableHeadersVisualStyles = true;
+        g.EnableHeadersVisualStyles = false; // تا رنگ هدرها در تم تیره اعمال شود
         g.AutoGenerateColumns = false; // فقط ستون‌های تعریف‌شده نمایش داده شوند
         g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         g.MultiSelect = false;

@@ -61,11 +61,22 @@ internal class RButton : Button
                 FlatStyle = FlatStyle.Flat;
                 FlatAppearance.BorderSize = 0;
                 break;
-            default:
-                BackColor = Theme.Base;
-                ForeColor = Theme.Text;
-                UseVisualStyleBackColor = true;
-                FlatStyle = FlatStyle.System;
+            default: // Ghost — هماهنگ با تم
+                if (Theme.IsDark)
+                {
+                    BackColor = Theme.SurfaceAlt;
+                    ForeColor = Theme.Text;
+                    FlatStyle = FlatStyle.Flat;
+                    FlatAppearance.BorderSize = 1;
+                    FlatAppearance.BorderColor = Theme.Border;
+                }
+                else
+                {
+                    BackColor = Theme.Base;
+                    ForeColor = Theme.Text;
+                    UseVisualStyleBackColor = true;
+                    FlatStyle = FlatStyle.System;
+                }
                 break;
         }
     }
@@ -91,6 +102,7 @@ internal class RField : Panel
         {
             BorderStyle = BorderStyle.FixedSingle,
             Dock = DockStyle.Fill,
+            BackColor = Theme.Surface,
             ForeColor = Theme.Text,
             Font = Theme.F,
             RightToLeft = RightToLeft.Yes,
