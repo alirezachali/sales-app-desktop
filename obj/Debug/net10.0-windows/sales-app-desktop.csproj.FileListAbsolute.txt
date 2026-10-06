@@ -1,0 +1,6 @@
+C:\Users\Ali\Documents\sales-app-desktop\obj\Debug\net10.0-windows\sales-app-desktop.csproj.AssemblyReference.cache
+C:\Users\Ali\Documents\sales-app-desktop\obj\Debug\net10.0-windows\sales-app-desktop.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ali\Documents\sales-app-desktop\obj\Debug\net10.0-windows\sales-app-desktop.AssemblyInfoInputs.cache
+C:\Users\Ali\Documents\sales-app-desktop\obj\Debug\net10.0-windows\sales-app-desktop.AssemblyInfo.cs
+C:\Users\Ali\Documents\sales-app-desktop\obj\Debug\net10.0-windows\sales-app-desktop.csproj.CoreCompileInputs.cache
+C:\Users\Ali\Documents\sales-app-desktop\obj\Debug\net10.0-windows\sales-app-desktop.sourcelink.json
