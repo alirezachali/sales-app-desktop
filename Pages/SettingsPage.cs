@@ -47,6 +47,7 @@ public class SettingsPage : PageBase
             RightToLeft = RightToLeft.Yes,
             Padding = new Padding(10),
             BackColor = Theme.Surface,
+            ForeColor = Theme.Text,
         };
         form.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150));
         form.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -73,6 +74,8 @@ public class SettingsPage : PageBase
         _theme.DropDownStyle = ComboBoxStyle.DropDownList;
         _theme.Font = Theme.F;
         _theme.Width = 220;
+        _theme.BackColor = Theme.Surface;
+        _theme.ForeColor = Theme.Text;
         _theme.DataSource = new List<NamedOption>
         {
             new("dark", "تیره"),
@@ -84,26 +87,32 @@ public class SettingsPage : PageBase
         _theme.SelectedIndexChanged += (_, _) => _dirty = true;
         _theme.HandleCreated += (_, _) =>
             _theme.SelectedIndex = _s.IsDark ? 0 : 1;
-        AddRow(new Label { Text = "تم برنامه:", Font = Theme.F }, _theme);
+        AddRow(new Label { Text = "تم برنامه:", Font = Theme.F, ForeColor = Theme.TextDim }, _theme);
 
         // نام فروشگاه
         _storeName.Text = _s.StoreName;
         _storeName.Font = Theme.F;
+        _storeName.BackColor = Theme.Surface;
+        _storeName.ForeColor = Theme.Text;
         _storeName.Dock = DockStyle.Fill;
         _storeName.TextChanged += (_, _) => _dirty = true;
-        AddRow(new Label { Text = "نام فروشگاه:", Font = Theme.F }, _storeName);
+        AddRow(new Label { Text = "نام فروشگاه:", Font = Theme.F, ForeColor = Theme.TextDim }, _storeName);
 
         // واحد پولی
         _currency.Text = _s.Currency;
         _currency.Font = Theme.F;
+        _currency.BackColor = Theme.Surface;
+        _currency.ForeColor = Theme.Text;
         _currency.Dock = DockStyle.Fill;
         _currency.TextChanged += (_, _) => _dirty = true;
-        AddRow(new Label { Text = "واحد پولی:", Font = Theme.F }, _currency);
+        AddRow(new Label { Text = "واحد پولی:", Font = Theme.F, ForeColor = Theme.TextDim }, _currency);
 
         // منطقه زمانی
         _timezone.DropDownStyle = ComboBoxStyle.DropDownList;
         _timezone.Font = Theme.F;
         _timezone.Width = 220;
+        _timezone.BackColor = Theme.Surface;
+        _timezone.ForeColor = Theme.Text;
         _timezone.DataSource = Zones.Select(z => new NamedOption(z.Name, z.Offset.ToString(CultureInfo.InvariantCulture))).ToList();
         _timezone.DisplayMember = nameof(NamedOption.Display);
         _timezone.ValueMember = nameof(NamedOption.Key);
@@ -111,7 +120,7 @@ public class SettingsPage : PageBase
         _timezone.SelectedIndexChanged += (_, _) => _dirty = true;
         _timezone.HandleCreated += (_, _) =>
             _timezone.SelectedIndex = matchIdx >= 0 ? matchIdx : 0;
-        AddRow(new Label { Text = "منطقه زمانی:", Font = Theme.F }, _timezone);
+        AddRow(new Label { Text = "منطقه زمانی:", Font = Theme.F, ForeColor = Theme.TextDim }, _timezone);
 
         // لوگو
         _logoPreview.Size = new Size(72, 72);
@@ -143,7 +152,7 @@ public class SettingsPage : PageBase
         };
         logoCell.Controls.Add(_logoPreview);
         logoCell.Controls.Add(logoButtons);
-        AddRow(new Label { Text = "لوگو:", Font = Theme.F }, logoCell, 90);
+        AddRow(new Label { Text = "لوگو:", Font = Theme.F, ForeColor = Theme.TextDim }, logoCell, 90);
 
         // دکمه ذخیره
         var btnSave = new RButton { Text = "ذخیره و اعمال", Width = 140, Height = 38, Variant = ButtonVariant.Primary };

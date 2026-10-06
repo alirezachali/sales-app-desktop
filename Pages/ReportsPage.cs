@@ -59,6 +59,8 @@ public class ReportsPage : PageBase
         _period.DropDownStyle = ComboBoxStyle.DropDownList;
         _period.Font = Theme.F;
         _period.Width = 160;
+        _period.BackColor = Theme.Surface;
+        _period.ForeColor = Theme.Text;
         _period.DataSource = new List<PeriodOption>
         {
             new("daily", "روزانه"),
@@ -74,6 +76,7 @@ public class ReportsPage : PageBase
             Text = "بازه:",
             AutoSize = true,
             Font = Theme.F,
+            ForeColor = Theme.TextDim,
             Anchor = AnchorStyles.Left,
         };
 
