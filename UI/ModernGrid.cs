@@ -41,6 +41,7 @@ internal static class ModernGrid
         g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         g.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
         g.EnableHeadersVisualStyles = true;
+        g.AutoGenerateColumns = false; // فقط ستون‌های تعریف‌شده نمایش داده شوند
         g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         g.MultiSelect = false;
         g.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;

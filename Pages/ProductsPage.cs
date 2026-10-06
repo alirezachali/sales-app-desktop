@@ -57,6 +57,7 @@ public class ProductsPage : PageBase
         _grid.ReadOnly = true;
         ModernGrid.Apply(_grid);
         _grid.Dock = DockStyle.Fill;
+        _grid.Columns.Add(ModernGrid.Col("کد", 70, DataGridViewContentAlignment.MiddleCenter, nameof(Product.Id), 7));
         _grid.Columns.Add(ModernGrid.Col("نام", 240, DataGridViewContentAlignment.MiddleRight, nameof(Product.Name), 22));
         _grid.Columns.Add(ModernGrid.Col("بارکد", 150, DataGridViewContentAlignment.MiddleLeft, nameof(Product.Barcode), 15));
         _grid.Columns.Add(ModernGrid.Col("دسته", 120, DataGridViewContentAlignment.MiddleRight, nameof(Product.Category), 12));
@@ -68,11 +69,14 @@ public class ProductsPage : PageBase
             if (ev.Value is null) return;
             switch (ev.ColumnIndex)
             {
-                case 3: // قیمت
+                case 0: // کد
+                    ev.Value = Theme.FaDigits(ev.Value.ToString() ?? "");
+                    break;
+                case 4: // قیمت
                     if (decimal.TryParse(ev.Value.ToString(), out decimal p))
                         ev.Value = Theme.Toman(p);
                     break;
-                case 4: // موجودی
+                case 5: // موجودی
                     ev.Value = Theme.FaDigits(ev.Value.ToString() ?? "");
                     break;
             }

@@ -69,6 +69,7 @@ public class CustomersPage : PageBase
         _grid.ReadOnly = true;
         ModernGrid.Apply(_grid);
         _grid.Dock = DockStyle.Fill;
+        _grid.Columns.Add(ModernGrid.Col("کد", 70, DataGridViewContentAlignment.MiddleCenter, nameof(CustomerRow.Id), 7));
         _grid.Columns.Add(ModernGrid.Col("نام", 200, DataGridViewContentAlignment.MiddleRight, nameof(CustomerRow.Name), 20));
         _grid.Columns.Add(ModernGrid.Col("شماره تماس", 150, DataGridViewContentAlignment.MiddleLeft, nameof(CustomerRow.Phone), 16));
         _grid.Columns.Add(ModernGrid.Col("آدرس", 200, DataGridViewContentAlignment.MiddleRight, nameof(CustomerRow.Address), 20));
@@ -80,12 +81,13 @@ public class CustomersPage : PageBase
             if (ev.Value is null) return;
             switch (ev.ColumnIndex)
             {
-                case 3:
+                case 0: // کد
+                case 5: // تعداد خرید
+                    ev.Value = Theme.FaDigits(ev.Value.ToString() ?? "");
+                    break;
+                case 4: // اعتبار/بدهی
                     if (decimal.TryParse(ev.Value.ToString(), out decimal b))
                         ev.Value = Theme.Toman(b);
-                    break;
-                case 4:
-                    ev.Value = Theme.FaDigits(ev.Value.ToString() ?? "");
                     break;
             }
         };
